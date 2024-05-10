@@ -65,6 +65,25 @@ Resources:
             - HEAD
           AllowedOrigins:
             - "*"
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: false
+
+
+  S3UploadBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref S3UploadBucket
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action:
+              - s3:GetObject
+            Resource: !Sub arn:aws:s3:::${S3UploadBucket}/*
 
 ## Take a note of the outputs for deploying the workflow templates in this sample application
 Outputs:
